@@ -1,12 +1,18 @@
-import './App.css';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ComingSoon } from './Pages';
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-
-
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<ComingSoon />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
+
+
 
 export default App;
