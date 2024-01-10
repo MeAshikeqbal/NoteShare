@@ -22,6 +22,7 @@ import { login } from "@/actions/login"
 
 import { useState, useTransition } from "react"
 import { useSearchParams } from "next/navigation"
+import Link from "next/link"
 
 
 export const LoginForm = () => {
@@ -48,8 +49,7 @@ export const LoginForm = () => {
         startTransition(() => {
             login(data)
                 .then((data) => {
-                   //TODO: Success message
-                    // setSuccess(data?.success)
+                    setSuccess(data?.success)
                     setError(data?.error)
                 })
         })
@@ -104,13 +104,24 @@ export const LoginForm = () => {
                                             disabled={isPending}
                                         />
                                     </FormControl>
+                                    <Button
+                                        variant="link"
+                                        size="sm"
+                                        asChild
+                                        className="p-0 text-sm font-normal"
+                                    >
+                                        <Link
+                                            href="/forgot-password">
+                                            Forgot Password?
+                                        </Link>
+                                    </Button>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
                     </div>
                     <FormError
-                        message={error ||urlError}
+                        message={error || urlError}
                     />
                     <FormSuccess
                         message={success}

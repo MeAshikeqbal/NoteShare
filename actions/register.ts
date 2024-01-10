@@ -3,9 +3,10 @@
 import * as z from "zod";
 import { RegisterSchema } from "@/schemas";
 import { db } from "@/lib/db";
-
 import bcrypt from "bcryptjs";
 import { getUserByEmail } from "@/data/user";
+import { generateVerificationToken } from "@/lib/tokens";
+import { sendVereficationEmail } from "@/lib/mail";
 
 export const register = async (data: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(data);
@@ -30,9 +31,14 @@ export const register = async (data: z.infer<typeof RegisterSchema>) => {
     },
   })
 
-  //todo: send email
+  const verificationToken = await generateVerificationToken(email);
+
+  await sendVereficationEmail(
+    verificationToken.email,
+    verificationToken.token
+  );
 
   return {
-    success: "Register successfull",
+    success: "Check your email for a verification link",
   };
 };
