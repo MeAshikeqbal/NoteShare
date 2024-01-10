@@ -6,10 +6,12 @@ export const sendVereficationEmail = async (email: string, token: string) => {
   const ConformationLink = `http://localhost:3000/new-verification?token=${token}`;
 
   await resend.emails.send({
-    from: "verification@cappybaralab.me",
+    from: "Note Share<varification@cappybaralab.me>",
     to: email,
     subject: "Email Verification",
-    html: `<a href="${ConformationLink}">Click Here</a>`,
+    html: `
+    <h1>Email Verification</h1>
+    <a href="${ConformationLink}">Click Here</a>`,
   });
 };
 
@@ -17,9 +19,23 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
   const PasswordResetLink = `http://localhost:3000/new-password?token=${token}`;
 
   await resend.emails.send({
-    from: "verification@cappybaralab.me",
+    from: "Note Share<varification@cappybaralab.me>",
     to: email,
     subject: "Password Reset",
-    html: `<a href="${PasswordResetLink}">Click Here</a>`,
+    html: `
+    <h1>Password Reset</h1>
+    <a href="${PasswordResetLink}">Click Here</a>`,
   });
 };
+
+export const sendTwoFactorEmail = async (email: string, token: string) => {
+  await resend.emails.send({
+    from: "Note Share<varification@cappybaralab.me>",
+    to: email,
+    subject: "2FA Code",
+    html: `
+    <h1>2FA Code</h1>
+    <p>${token}</p>
+    `
+})
+}
