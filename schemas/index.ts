@@ -31,3 +31,16 @@ export const RegisterSchema = z.object({
     message: "Name must only contain letters",
   }),
 });
+
+
+export const ForgotPasswordFormSchema = z.object({
+  email: z.string().email({
+    message: "Please enter a valid email",
+  }),
+});
+
+export const NewPasswordSchema = z.object({
+  password: z.string().min(8, {
+    message: "Password must be at least 8 characters long",
+  }),
+});
