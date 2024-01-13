@@ -6,19 +6,18 @@ import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { UserRoles } from "@prisma/client";
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation";
+import { getAccountByUserId } from "./data/account";
 
 export const {
   handlers: { GET, POST },
   auth,
   signIn,
   signOut,
+  update,
 } = NextAuth({
   pages: {
     signIn: "/login",
-    signOut: "/auth/signout",
     error: "/error",
-    verifyRequest: "/auth/verify-request",
-    newUser: "/auth/new-user",
   },
   events: {
     async linkAccount({ user }) {
@@ -58,6 +57,7 @@ export const {
       }
       return true;
     },
+
     async session({ token, session }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
@@ -66,13 +66,36 @@ export const {
       if (token.role && session.user) {
         session.user.role = token.role as UserRoles;
       }
+      if (session.user) {
+        session.user.name = token.name as string;
+        session.user.email = token.email as string;
+        session.user.image = token.image as string;
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+        session.user.username = token.username as string;
+      }
+
       return session;
     },
     async jwt({ token }) {
       if (!token.sub) return token;
+
       const existingUser = await getUserById(token.sub);
+      
       if (!existingUser) return token;
+      
+      const existingAccount = await getAccountByUserId(existingUser.id);
+
+
+      token.isOAuth = !!existingAccount;
+      token.name = existingUser.name;
+      token.email = existingUser.email;
       token.role = existingUser.role;
+      token.image = existingUser.image;
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+      token.id = existingUser.id;
+      token.emailVerified = existingUser.emailVerified;
+      token.username = existingUser.username;
+
       return token;
     },
   },

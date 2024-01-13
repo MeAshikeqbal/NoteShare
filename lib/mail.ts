@@ -2,7 +2,7 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export const sendVereficationEmail = async (email: string, token: string) => {
+export const sendVerificationEmail = async (email: string, token: string) => {
   const ConformationLink = `http://localhost:3000/new-verification?token=${token}`;
 
   await resend.emails.send({
@@ -36,6 +36,8 @@ export const sendTwoFactorEmail = async (email: string, token: string) => {
     html: `
     <h1>2FA Code</h1>
     <p>${token}</p>
+    <p>Code will expire in 5 minutes</p>
     `
 })
 }
+

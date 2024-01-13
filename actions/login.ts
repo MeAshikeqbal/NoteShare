@@ -7,7 +7,7 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 import { generateVerificationToken } from "@/lib/tokens";
 import { getUserByEmail } from "@/data/user";
-import { sendVereficationEmail } from "@/lib/mail";
+import { sendVerificationEmail } from "@/lib/mail";
 import { generateTwoFactorToken } from "@/lib/tokens";
 import { sendTwoFactorEmail } from "@/lib/mail";
 import bcrypt from "bcryptjs";
@@ -54,7 +54,7 @@ export const login = async (data: z.infer<typeof LoginSchema>) => {
       existingUser.email
     );
 
-    await sendVereficationEmail(
+    await sendVerificationEmail(
       verificationToken.email,
       verificationToken.token
     );
