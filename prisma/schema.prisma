@@ -14,6 +14,7 @@ datasource db {
 enum UserRoles {
   USER
   ADMIN
+  TEACHER
 }
 
 model User {
@@ -28,6 +29,9 @@ model User {
   accounts              Account[]
   isTwoFactorEnabled    Boolean                @default(false)
   twofactorConformation TwofactorConfirmation?
+  courses               Course[]
+  userProgress          UserProgress[]
+  subscriptions         Subscription[]
 }
 
 model Account {
@@ -82,4 +86,96 @@ model TwofactorConfirmation {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId])
+}
+
+model Course {
+  id           String         @id @default(cuid())
+  userId       String         @db.Text
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title        String         @db.Text
+  description  String?        @db.Text
+  image        String?        @db.Text
+  isPublished  Boolean        @default(false)
+  catagoryId   String?
+  catagory     Catagory?      @relation(fields: [catagoryId], references: [id])
+  attachments  Attachment[]
+  subscription Subscription[]
+  Chapters     Chapter[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([userId])
+  @@index([catagoryId])
+}
+
+model Catagory {
+  id      String   @id @default(cuid())
+  name    String   @unique
+  courses Course[]
+}
+
+model Attachment {
+  id        String   @id @default(cuid())
+  name      String
+  url       String   @db.Text
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+}
+
+model Chapter {
+  id           String         @id @default(cuid())
+  title        String
+  description  String?        @db.Text
+  videoUrl     String?        @db.Text
+  muxData      MuxData?
+  position     Int
+  isPublished  Boolean        @default(false)
+  course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  userProgress UserProgress[]
+  courseId     String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([courseId])
+}
+
+model MuxData {
+  id         String  @id @default(cuid())
+  assetId    String
+  playbackId String?
+  courseId   String
+  chapterId  String  @unique
+  chapter    Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+}
+
+model UserProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chapterId   String
+  chapter     Chapter  @relation(fields: [chapterId], references: [id])
+  progress    Int
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, chapterId])
+  @@index([chapterId])
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, courseId])
+  @@index([courseId])
 }

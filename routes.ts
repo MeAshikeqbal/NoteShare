@@ -5,7 +5,8 @@
  */
 export const publicRoutes = [
     "/",
-    "/new-verification"
+    "/new-verification",
+    "/api/uploadthing",
 ];
 
 /**
@@ -41,3 +42,4 @@ export const apiAuthPrefix = "/api/auth";
  * Default redirect path after login
  */
 export const DEFAULT_LOGIN_REDIRECT = "/settings";
+

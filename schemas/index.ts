@@ -52,7 +52,7 @@ export const NewPasswordSchema = z.object({
 export const SettingsSchema = z.object({
   name: z.optional(z.string()),
   isTwoFactorEnabled: z.optional(z.boolean()),
-  role: z.enum([UserRoles.ADMIN, UserRoles.USER]),
+  role: z.enum([UserRoles.ADMIN, UserRoles.USER,UserRoles.TEACHER]),
   email: z.optional(z.string().email()),
   password: z.optional(z.string().min(6)),
   newPassword: z.optional(z.string().min(6)),
@@ -77,4 +77,16 @@ export const SettingsSchema = z.object({
   }, {
     message: "Password is required!",
     path: ["password"]
+  })
+
+  export const CreateCourseSchema = z.object({
+    title: z.string().min(3,{
+      message: "Title must be at least 3 characters long",
+    }),
+    description: z.string().min(3,{
+      message: "Description must be at least 3 characters long",
+    }),
+    image:z.string().min(1,{
+      message: "Image Url is required",
+    }),
   })
