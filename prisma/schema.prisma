@@ -98,11 +98,11 @@ model Course {
   isPublished  Boolean        @default(false)
   catagoryId   String?
   catagory     Catagory?      @relation(fields: [catagoryId], references: [id])
-  attachments  Attachment[]
   subscription Subscription[]
   Chapters     Chapter[]
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
+  attachments  Attachment[]
 
   @@index([userId])
   @@index([catagoryId])
@@ -139,8 +139,21 @@ model Chapter {
   courseId     String
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
+  attachments  ChapterAttachment[]
 
   @@index([courseId])
+}
+
+model ChapterAttachment {
+  id        String   @id @default(cuid())
+  name      String
+  url       String   @db.Text
+  chapterId String
+  chapter   Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([chapterId])
 }
 
 model MuxData {

@@ -6,15 +6,16 @@ import { PlusCircle, File, Loader2, X } from "lucide-react";
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
-import { Attachment, Course } from "@prisma/client";
+import { Attachment, Chapter, ChapterAttachment, Course } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
 import { toast } from "sonner";
 
 interface AttachmentFormProps {
-  initialData: Course & { attachments: Attachment[] };
+  initialData: Chapter & { attachments: ChapterAttachment[]};
   courseId: string;
+  chapterId: string;
 };
 
 const formSchema = z.object({
@@ -23,7 +24,8 @@ const formSchema = z.object({
 
 export const AttachmentForm = ({
   initialData,
-  courseId
+  courseId,
+  chapterId,
 }: AttachmentFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -42,7 +44,7 @@ export const AttachmentForm = ({
           onClick: () => toast.dismiss(),
         }
       });
-      await axios.post(`/api/courses/${courseId}/attachments`, values);
+      await axios.post(`/api/courses/${courseId}/chapters/${chapterId}/attachments`, values);
       toast.success("Course updated", {
         duration: 5000,
         position: "bottom-right",
@@ -76,7 +78,7 @@ export const AttachmentForm = ({
         }
       })
       setDeletingId(id);
-      await axios.delete(`/api/courses/${courseId}/attachments/${id}`);
+      await axios.delete(`/api/courses/${courseId}/chapters/${chapterId}/attachments/${id}`);
       toast.success("Attachment deleted", {
         duration: 5000,
         position: "bottom-right",
@@ -103,7 +105,7 @@ export const AttachmentForm = ({
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course attachments
+        Chapter attachments
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing && (
             <>Cancel</>
@@ -156,7 +158,7 @@ export const AttachmentForm = ({
       {isEditing && (
         <div>
           <FileUpload
-            endpoint="courseAttachment"
+            endpoint="chapterAttachment"
             onChange={(url) => {
               if (url) {
                 onSubmit({ url: url });
@@ -165,9 +167,9 @@ export const AttachmentForm = ({
           />
         </div>
       )}
-      <div className="text-xs text-muted-foreground mt-4">
-        Add anything your students might need to complete the course.
-      </div>
+          <div className="text-xs text-muted-foreground mt-4">
+            Add anything your students might need to complete the chapter.
+          </div>
     </div>
   )
 }

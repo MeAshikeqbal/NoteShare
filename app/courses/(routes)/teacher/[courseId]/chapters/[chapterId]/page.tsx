@@ -1,11 +1,13 @@
 import { IconBadge } from "@/components/icon-badge";
 import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { ArrowLeft, LayoutDashboard, Video } from "lucide-react";
+import { ArrowLeft, File, LayoutDashboard, Video } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { TitleForm } from "./_components/title-form";
 import { DiscriptionForm } from "./_components/description-form";
+import { VideoForm } from "./_components/video-form";
+import { AttachmentForm } from "./_components/attachment-form";
 
 const ChapterIdPage = async ({
     params
@@ -27,7 +29,13 @@ const ChapterIdPage = async ({
             courseId: params.courseId
         },
         include: {
-            muxData: true
+            muxData: true,
+            attachments: {
+                orderBy: {
+                    createdAt: "desc"
+                }
+            }
+
         }
     })
 
@@ -85,48 +93,72 @@ const ChapterIdPage = async ({
                 </div>
             </div>
             <div
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16"
+                className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16"
             >
                 <div
-                className="space-y-4"
+                    className="space-y-4"
                 >
                     <div>
                         <div
-                        className="flex items-center gap-x-2"
-                        >
-                         <IconBadge
-                         icon={LayoutDashboard}
-                         />   
-                         <h2>
-                            Coustomize Chapter
-                         </h2>
-                        </div>
-                        <TitleForm
-                        initialData={chapter}
-                        courseId={params.courseId}
-                        chapterId={params.chapterId}
-                        />
-                        <DiscriptionForm
-                        initialData={chapter}
-                        courseId={params.courseId}
-                        chapterId={params.chapterId}
-                        />
-                    </div>
-                </div>
-                    <div>
-                        <div
-                        className="flex items-center gap-x-2"
+                            className="flex items-center gap-x-2"
                         >
                             <IconBadge
-                            icon={Video}
+                                icon={LayoutDashboard}
                             />
-                            <h2
-                            className="text-xl "
-                            >
-                                Chapter Video
+                            <h2>
+                                Coustomize Chapter
                             </h2>
                         </div>
+                        <TitleForm
+                            initialData={chapter}
+                            courseId={params.courseId}
+                            chapterId={params.chapterId}
+                        />
+                        <DiscriptionForm
+                            initialData={chapter}
+                            courseId={params.courseId}
+                            chapterId={params.chapterId}
+                        />
                     </div>
+                        <div>
+                            <div
+                                className="flex items-center gap-x-2"
+                            >
+                                <IconBadge
+                                    icon={File}
+                                />
+                                <h2
+                                    className="text-xl "
+                                >
+                                    Resources & Attachments
+                                </h2>
+                            </div>
+                            <AttachmentForm
+                                initialData={chapter}
+                                courseId={params.courseId}
+                                chapterId={params.chapterId}
+                            />
+                        </div>
+                </div>
+                <div>
+                    <div
+                        className="flex items-center gap-x-2"
+                    >
+                        <IconBadge
+                            icon={Video}
+                        />
+                        <h2
+                            className="text-xl "
+                        >
+                            Chapter Video
+                        </h2>
+                    </div>
+                    <VideoForm
+                        initialData={chapter}
+                        courseId={params.courseId}
+                        chapterId={params.chapterId}
+                    />
+                </div>
             </div>
         </div>
     );
