@@ -10,12 +10,10 @@ import { Input } from "@/components/ui/input"
 import {
     Form,
     FormControl,
-    FormLabel,
     FormField,
     FormMessage,
     FormItem
 } from "@/components/ui/form"
-import { CreateCourseSchema } from "@/schemas"
 import { Pencil } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"

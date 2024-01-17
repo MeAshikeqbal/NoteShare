@@ -18,7 +18,6 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { Textarea } from "@/components/ui/textarea"
 import { Course } from "@prisma/client"
 import { Combobox } from "@/components/ui/combobox"
 

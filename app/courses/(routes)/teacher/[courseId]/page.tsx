@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import { IconBadge } from "@/components/icon-badge";
 import { db } from "@/lib/db";
 import { Files, LayoutDashboard, ListChecks } from "lucide-react";
@@ -9,6 +8,7 @@ import { ImageForm } from "./_components/image-form";
 import { CategoryForm } from "./_components/category-form";
 import { AttachmentForm } from "./_components/attachment-form";
 import { ChaptersForm } from "./_components/chapters-form";
+import { currentUser } from "@/lib/auth";
 
 
 const SingleCoursePage = async ({
@@ -19,8 +19,8 @@ const SingleCoursePage = async ({
     }
 }) => {
 
-    const session = await auth();
-    const userId = session?.user?.id;
+    const session = await currentUser();
+    const userId = session?.id;
 
     if (!userId) {
         return redirect("/login");
@@ -30,7 +30,7 @@ const SingleCoursePage = async ({
         return redirect("/courses/teacher");
     }
 
-    if (session?.user?.role !== "TEACHER") {
+    if (session?.role !== "TEACHER") {
         return redirect("/courses");
     }
 

@@ -13,7 +13,6 @@ import {
     FormMessage,
     FormItem
 } from "@/components/ui/form"
-import { CreateCourseSchema } from "@/schemas"
 import { Pencil } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"

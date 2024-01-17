@@ -1,19 +1,18 @@
-import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
-import { currentRole } from "@/lib/auth"
+import { currentUser } from "@/lib/auth"
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 const TeacherCourcesPage = async () => {
-    const session = await auth();
-    const userId = session?.user?.id;
+    const session = await currentUser();
+    const userId = session?.id;
 
     if(!userId) {
         return redirect("/login");
     }
 
 
-    if(session?.user?.role !== "TEACHER") {
+    if(session?.role !== "TEACHER") {
         return redirect("/courses");
     }
 
