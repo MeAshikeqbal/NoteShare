@@ -40,7 +40,7 @@ const SingleCoursePage = async ({
             userId
         },
         include: {
-            Chapters:{
+            Chapters: {
                 orderBy: {
                     position: "asc"
                 }
@@ -160,7 +160,7 @@ const SingleCoursePage = async ({
                             </h2>
                         </div>
                         <ChaptersForm
-                            initialData={course}
+                            initialData={{ ...course, chapters: course.Chapters }}
                             courseId={course.id}
                         />
                     </div>

@@ -2,7 +2,7 @@ import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-export async function PATCH(
+export async function POST(
   req: Request,
   { params }: { params: { courseId: string } }
 ) {
@@ -10,7 +10,7 @@ export async function PATCH(
     const user = await currentUser();
     const userRole = user?.role;
     const { courseId } = params;
-    const data = await req.json();
+    const { title } = await req.json();
 
     if (userRole !== "TEACHER") {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -22,10 +22,10 @@ export async function PATCH(
     if (!courseId) {
       return new NextResponse("Bad Request", { status: 400 });
     }
-    if (!data) {
+    if (!title) {
       return new NextResponse("Bad Request", { status: 400 });
     }
-    
+
     const courseOwner = await db.course.findUnique({
       where: {
         id: params.courseId,
@@ -36,21 +36,30 @@ export async function PATCH(
     if (!courseOwner) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    
-    
-    const course = await db.course.update({
-      where: {
-        id: courseId,
-        userId: user.id,
-      },
+
+    const lastChapter = await db.chapter.findFirst({
+        where:{
+            courseId:params.courseId,
+        },
+        orderBy:{
+            position:"desc",
+        },
+    })
+
+    const newPosition = lastChapter?.position ? lastChapter.position + 1 : 1;
+
+    const chapter = await db.chapter.create({
       data: {
-        ...data,
+        title,
+        courseId: params.courseId,
+        position:newPosition,
       },
     });
 
-    return NextResponse.json(course, { status: 201 });
+    return NextResponse.json(chapter, { status: 201 });
+
   } catch (error) {
-    console.log("[COURSES]", error);
+    console.log("COURSE CHAPTERS POST ERROR: ", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
