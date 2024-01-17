@@ -162,6 +162,7 @@ export const ChaptersForm = ({
                                             disabled={isSubmitting}
                                             placeholder="Chapter title"
                                             {...field}
+                                            className="bg-slate-50"
                                         />
                                     </FormControl>
                                     <FormMessage />
