@@ -87,15 +87,36 @@ export const ChaptersForm = ({
 
     const onReorder = async (updateData: { id: string; position: number }[]) => {
         try {
+            toast.loading("Reordering chapters",{
+                duration: 5000,
+                position: "bottom-right",
+                action: {
+                    label: "Close",
+                    onClick: () => toast.dismiss(),
+                }
+            })
             setIsUpdating(true);
-
             await axios.put(`/api/courses/${courseId}/chapters/reorder`, {
                 list: updateData
             });
-            toast.success("Chapters reordered");
+            toast.success("Chapters reordered",{
+                duration: 5000,
+                position: "bottom-right",
+                action: {
+                    label: "Close",
+                    onClick: () => toast.dismiss(),
+                }
+            });
             router.refresh();
         } catch {
-            toast.error("Something went wrong");
+            toast.error("Something went wrong",{
+                duration: 5000,
+                position: "bottom-right",
+                action: {
+                    label: "Close",
+                    onClick: () => toast.dismiss(),
+                }
+            });
         } finally {
             setIsUpdating(false);
         }
