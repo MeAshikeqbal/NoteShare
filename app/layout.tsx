@@ -6,6 +6,7 @@ import { auth } from '@/auth'
 import { Toaster } from '@/components/ui/sonner'
 import { Sidebar } from '@/components/nav/sidebar'
 import { Navbar } from '@/components/nav/navbar'
+import { ConfettiProvider } from '@/components/providers/confetti-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -42,6 +43,7 @@ export default async function RootLayout({
             <main
               className="md:pl-56 pt-[80px] h-full"
             >
+              <ConfettiProvider />
               {children}
               <Toaster
                 position="bottom-right"

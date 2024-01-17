@@ -92,3 +92,95 @@ export async function PATCH(
     return new NextResponse("Internal server error", { status: 500 });
   }
 }
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { courseId: string; chapterId: string } }
+) {
+  try {
+    const user = await currentUser();
+    const userRole = user?.role;
+    const { courseId } = params;
+
+    if (userRole !== "TEACHER") {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    if (!user) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+    if (!courseId) {
+      return new NextResponse("Bad Request", { status: 400 });
+    }
+
+    const courseOwner = await db.course.findUnique({
+      where: {
+        id: params.courseId,
+        userId: user.id,
+      },
+    });
+
+    if (!courseOwner) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const chapter = await db.chapter.findUnique({
+      where: {
+        id: params.chapterId,
+        courseId: params.courseId,
+
+      },
+    });
+
+    if (!chapter) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
+
+    if (chapter.videoUrl) {
+      const existingMuxData = await db.muxData.findFirst({
+        where: {
+          chapterId: params.chapterId
+        }
+      })
+
+      if(existingMuxData){
+        await Video.Assets.del(existingMuxData.assetId);
+        await db.muxData.delete({
+          where: {
+            id: existingMuxData.id
+          }
+        })
+      }
+    }
+
+    const deletedChapter = await db.chapter.delete({
+      where: {
+        id: params.chapterId,
+      },
+    });
+
+    const publishedChaptersInCourse = await db.chapter.findMany({
+      where: {
+        courseId: params.courseId,
+        isPublished: true
+      }
+    })
+
+    if(!publishedChaptersInCourse.length){
+      await db.course.update({
+        where: {
+          id: params.courseId
+        },
+        data: {
+          isPublished: false
+        }
+      })
+    }
+
+    return NextResponse.json(deletedChapter, { status: 200 });
+
+  } catch (error) {
+    console.log("Chapter DELETE error: ", error);
+    return new NextResponse("Internal server error", { status: 500 });
+  }
+}
