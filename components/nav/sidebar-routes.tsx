@@ -35,7 +35,7 @@ const homepage=[
 
 export const SidebarRoutes = () => {
     const pathname = usePathname()
-    const isTeacherPage = pathname?.includes("/teacher")
+    const isTeacherPage = pathname?.includes("/courses/teacher")
 
 
     const routes= isTeacherPage ? teacherRoutes : userRoutes
