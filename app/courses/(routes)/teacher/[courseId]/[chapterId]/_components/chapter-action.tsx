@@ -44,7 +44,7 @@ export const ChapterAction = ({
                 }
             })
             router.refresh()
-            router.push(`/courses/teacher/course/${courseId}`)
+            router.push(`/courses/teacher/${courseId}`)
         } catch {
             toast.error("Failed to delete chapter", {
                 duration: 5000,

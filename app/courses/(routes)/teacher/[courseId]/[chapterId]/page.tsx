@@ -74,7 +74,7 @@ const ChapterIdPage = async ({
                         className="w-full"
                     >
                         <Link
-                            href={`/courses/teacher/course/${params.courseId}`}
+                            href={`/courses/teacher/${params.courseId}`}
                             className="flex items-center text-center hover:opacity-75 transition mb-6"
                         >
                             <ArrowLeft
