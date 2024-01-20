@@ -12,23 +12,23 @@ export const NavbarRoutes = () => {
 
     const pathname = usePathname()
 
-    const isTeacherPage = pathname?.includes("/courses/teacher")
-    const isPlayerPage = pathname?.includes("/courses/chapter")
+
+    const isSearchPage = pathname?.startsWith("/courses/search")
+    const isTeacherPage = pathname?.startsWith("/courses/teacher")
+    const isPlayerPage = pathname?.includes("/courses/") && !pathname?.includes("/courses/search");    
     const isTeacher = useCurrentUser()?.role === "TEACHER"
-    const isCoursePage = pathname?.includes("/courses")
-    const isCourseSearchPage = pathname?.includes("/courses/search")
 
     return (
         <>
-            {isCourseSearchPage&&(
+            {(isSearchPage && (
                 <div className="hidden md:block">
-                    <SearchInput/>
+                    <SearchInput />
                 </div>
-            )}
+            ))}
             <div
                 className="flex gap-x-2 ml-auto items-center"
             >
-                {isTeacherPage ? (
+                {(isTeacherPage || isPlayerPage)  ? (
                     <Link
                         href="/courses"
                         about="Go back to courses"

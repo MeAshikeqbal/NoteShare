@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import { Categories } from "./_components/categories";
 import { SearchInput } from "@/components/search-input";
-import { getCourses } from "@/actions/course";
+import { getCourses } from "@/actions/courses/get-course";
 import { currentUser } from "@/lib/auth"
 import { redirect } from "next/navigation";
 import { CoursesList } from "./_components/courses-list";
