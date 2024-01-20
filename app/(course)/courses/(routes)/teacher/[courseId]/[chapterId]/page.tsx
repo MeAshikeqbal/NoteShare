@@ -1,7 +1,7 @@
 import { IconBadge } from "@/components/icon-badge";
 import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { ArrowLeft, File, LayoutDashboard, Video } from "lucide-react";
+import { ArrowLeft, Eye, File, LayoutDashboard, Video } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { TitleForm } from "./_components/title-form";
@@ -10,6 +10,7 @@ import { VideoForm } from "./_components/video-form";
 import { AttachmentForm } from "./_components/attachment-form";
 import { Banner } from "@/components/banner";
 import { ChapterAction } from "./_components/chapter-action";
+import { ChapterAccessForm } from "./_components/chapter-access-form";
 
 const ChapterIdPage = async ({
     params
@@ -58,12 +59,12 @@ const ChapterIdPage = async ({
 
     return (
         <>
-        {!chapter.isPublished &&(
-            <Banner
-            variant="warning"
-            label="This chapter is not published. Students can't see this chapter"
-            />
-        ) }
+            {!chapter.isPublished && (
+                <Banner
+                    variant="warning"
+                    label="This chapter is not published. Students can't see this chapter"
+                />
+            )}
             <div
                 className="p-6"
             >
@@ -174,7 +175,23 @@ const ChapterIdPage = async ({
                             courseId={params.courseId}
                             chapterId={params.chapterId}
                         />
+                        <div
+                            className="mt-7"
+                        >
+                            <div className="flex items-center gap-x-2">
+                                <IconBadge icon={Eye} />
+                                <h2 className="text-xl">
+                                    Access Settings
+                                </h2>
+                            </div>
+                            <ChapterAccessForm
+                                initialData={chapter}
+                                courseId={params.courseId}
+                                chapterId={params.chapterId}
+                            />
+                        </div>
                     </div>
+
                 </div>
             </div>
         </>
