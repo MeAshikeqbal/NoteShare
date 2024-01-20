@@ -25,13 +25,6 @@ const teacherRoutes = [
     },
 ]
 
-const homepage=[
-    {
-        icon: Layout,
-        lable: "Dashboard",
-        href: "/"
-    },
-]
 
 export const SidebarRoutes = () => {
     const pathname = usePathname()

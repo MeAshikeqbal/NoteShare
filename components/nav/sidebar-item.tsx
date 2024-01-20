@@ -22,9 +22,7 @@ export const SidebarItem = ({
     const router = useRouter()
 
     const isActive =
-        (pathname === "/" && href === "/") ||
-        pathname === href ||
-        pathname?.includes(href)
+        pathname === href 
 
     const onClick = () => {
         router.push(href)

@@ -1,6 +1,6 @@
 "use client"
 
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { UserButton } from "./auth/user-button"
 import { Button } from "./ui/button"
 import { LogOut } from "lucide-react"
@@ -28,7 +28,7 @@ export const NavbarRoutes = () => {
             <div
                 className="flex gap-x-2 ml-auto items-center"
             >
-                {isTeacherPage || isPlayerPage ? (
+                {isTeacherPage ? (
                     <Link
                         href="/courses"
                         about="Go back to courses"
