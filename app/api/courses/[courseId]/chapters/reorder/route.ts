@@ -51,7 +51,7 @@ export async function PUT(
     return new NextResponse("Sucess", { status: 200 });
 
   } catch (error) {
-    console.log(`Course Chapters Reorder PUT:`, error);
+    console.log("Course Chapters Reorder PUT:", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }

@@ -44,7 +44,7 @@ export const Action = ({
                 }
             })
             router.refresh()
-            router.push(`/courses/teacher/`)
+            router.push("/courses/teacher/")
         } catch {
             toast.error("Failed to delete Course", {
                 duration: 5000,
