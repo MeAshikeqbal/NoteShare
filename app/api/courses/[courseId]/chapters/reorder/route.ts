@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function PUT(
   req: Request,
-  { params }: { params: { courseId: string } }
+  { params }: { params: { courseId: string } },
 ) {
   try {
     const user = await currentUser();
@@ -49,7 +49,6 @@ export async function PUT(
     }
 
     return new NextResponse("Sucess", { status: 200 });
-
   } catch (error) {
     console.log("Course Chapters Reorder PUT:", error);
     return new NextResponse("Internal Server Error", { status: 500 });
