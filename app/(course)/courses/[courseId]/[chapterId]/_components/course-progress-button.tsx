@@ -4,7 +4,7 @@ import axios from "axios";
 import { CheckCircle, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "sonner"
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
 
@@ -13,13 +13,13 @@ interface CourseProgressButtonProps {
   courseId: string;
   isCompleted?: boolean;
   nextChapterId?: string;
-};
+}
 
 export const CourseProgressButton = ({
   chapterId,
   courseId,
   isCompleted,
-  nextChapterId
+  nextChapterId,
 }: CourseProgressButtonProps) => {
   const router = useRouter();
   const confetti = useConfettiStore();
@@ -29,9 +29,12 @@ export const CourseProgressButton = ({
     try {
       setIsLoading(true);
 
-      await axios.put(`/api/courses/${courseId}/chapters/${chapterId}/progress`, {
-        isCompleted: !isCompleted
-      });
+      await axios.put(
+        `/api/courses/${courseId}/chapters/${chapterId}/progress`,
+        {
+          isCompleted: !isCompleted,
+        },
+      );
 
       if (!isCompleted && !nextChapterId) {
         confetti.onOpen();
@@ -45,27 +48,27 @@ export const CourseProgressButton = ({
         duration: 5000,
         position: "bottom-right",
         action: {
-            label: "Close",
-            onClick: () => toast.dismiss(),
-        }
-    });
+          label: "Close",
+          onClick: () => toast.dismiss(),
+        },
+      });
 
       router.refresh();
     } catch {
-      toast.error("Something went wrong",{
+      toast.error("Something went wrong", {
         duration: 5000,
         position: "bottom-right",
         action: {
-            label: "Close",
-            onClick: () => toast.dismiss(),
-        }
+          label: "Close",
+          onClick: () => toast.dismiss(),
+        },
       });
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
-  const Icon = isCompleted ? XCircle : CheckCircle
+  const Icon = isCompleted ? XCircle : CheckCircle;
 
   return (
     <Button
@@ -78,5 +81,5 @@ export const CourseProgressButton = ({
       {isCompleted ? "Not completed" : "Mark as complete"}
       <Icon className="h-4 w-4 ml-2" />
     </Button>
-  )
-}
+  );
+};
