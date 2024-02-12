@@ -41,5 +41,5 @@ export const apiAuthPrefix = "/api/auth";
 /**
  * Default redirect path after login
  */
-export const DEFAULT_LOGIN_REDIRECT = "/settings";
+export const DEFAULT_LOGIN_REDIRECT = "/";
 
