@@ -96,4 +96,4 @@ body::-webkit-scrollbar {
   font-size: 16px !important;
 }
 
-@import "~@uploadthing/react/styles.css"
+@import "~@uploadthing/react/styles.css";

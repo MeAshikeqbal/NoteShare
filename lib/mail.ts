@@ -37,7 +37,6 @@ export const sendTwoFactorEmail = async (email: string, token: string) => {
     <h1>2FA Code</h1>
     <p>${token}</p>
     <p>Code will expire in 5 minutes</p>
-    `
-})
-}
-
+    `,
+  });
+};

@@ -3,8 +3,6 @@ import { UserRoles } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
-
-
 const f = createUploadthing();
 
 const handleAuth = async () => {

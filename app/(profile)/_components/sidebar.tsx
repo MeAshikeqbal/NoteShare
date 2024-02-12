@@ -33,13 +33,12 @@ export const DashboardSidebar = () => {
     },
   ];
 
-    return (
-        <div>
-          <SideBar
-              routes={routes}
-              className="hidden md:flex flex-col items-center justify-between w-20 h-screen bg-blue-950"
-          />
-
-        </div>
-    )
-}
+  return (
+    <div>
+      <SideBar
+        routes={routes}
+        className="hidden md:flex flex-col items-center justify-between w-20 h-screen bg-blue-950"
+      />
+    </div>
+  );
+};

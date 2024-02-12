@@ -4,13 +4,13 @@ import { db } from "@/lib/db";
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { courseId: string; chapterId: string } }
+  { params }: { params: { courseId: string; chapterId: string } },
 ) {
   try {
     const user = await currentUser();
     const userRole = user?.role;
     const { courseId } = params;
-    
+
     if (userRole !== "TEACHER") {
       return new NextResponse("Unauthorized", { status: 401 });
     }

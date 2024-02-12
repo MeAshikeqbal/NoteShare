@@ -8,7 +8,7 @@ import { sendPasswordResetEmail } from "@/lib/mail";
 import { generatePasswordResetToken } from "@/lib/tokens";
 
 export const ForgotPassword = async (
-  data: z.infer<typeof ForgotPasswordFormSchema>
+  data: z.infer<typeof ForgotPasswordFormSchema>,
 ) => {
   const validatedData = ForgotPasswordFormSchema.safeParse(data);
   if (!validatedData.success) {
@@ -27,7 +27,7 @@ export const ForgotPassword = async (
   const passwordResetToken = await generatePasswordResetToken(email);
   await sendPasswordResetEmail(
     passwordResetToken.email,
-    passwordResetToken.token
+    passwordResetToken.token,
   );
 
   return {

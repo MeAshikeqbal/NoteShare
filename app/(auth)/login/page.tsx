@@ -1,9 +1,7 @@
-import { LoginForm } from "@/components/auth/login-form"
+import { LoginForm } from "@/components/auth/login-form";
 
 const loginPage = () => {
-    return (
-        <LoginForm />
-    )
-}
+  return <LoginForm />;
+};
 
-export default loginPage
+export default loginPage;

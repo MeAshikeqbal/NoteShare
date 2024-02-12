@@ -40,7 +40,7 @@ export const login = async (data: z.infer<typeof LoginSchema>) => {
 
   const isPasswordValid = await bcrypt.compare(
     validatedFields.data.password,
-    existingUser.password
+    existingUser.password,
   );
 
   if (!isPasswordValid) {
@@ -51,12 +51,12 @@ export const login = async (data: z.infer<typeof LoginSchema>) => {
 
   if (!existingUser.emailVerified) {
     const verificationToken = await generateVerificationToken(
-      existingUser.email
+      existingUser.email,
     );
 
     await sendVerificationEmail(
       verificationToken.email,
-      verificationToken.token
+      verificationToken.token,
     );
 
     return {
@@ -94,7 +94,7 @@ export const login = async (data: z.infer<typeof LoginSchema>) => {
         },
       });
       const existingConfirmation = await getTwoFactorConfirmationByUserId(
-        existingUser.id
+        existingUser.id,
       );
       if (existingConfirmation) {
         await db.twofactorConfirmation.delete({

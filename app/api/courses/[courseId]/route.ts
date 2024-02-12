@@ -5,12 +5,12 @@ import Mux from "@mux/mux-node";
 
 const { Video } = new Mux(
   process.env.MUX_TOKEN_ID!,
-  process.env.MUX_TOKEN_SECRET!
+  process.env.MUX_TOKEN_SECRET!,
 );
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { courseId: string } }
+  { params }: { params: { courseId: string } },
 ) {
   try {
     const user = await currentUser();
@@ -31,19 +31,18 @@ export async function PATCH(
     if (!data) {
       return new NextResponse("Bad Request", { status: 400 });
     }
-    
+
     const courseOwner = await db.course.findUnique({
       where: {
         id: params.courseId,
-        userId: user.id,    
-    },
+        userId: user.id,
+      },
     });
 
     if (!courseOwner) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    
-    
+
     const course = await db.course.update({
       where: {
         id: courseId,
@@ -63,7 +62,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { courseId: string } }
+  { params }: { params: { courseId: string } },
 ) {
   try {
     const user = await currentUser();
@@ -97,7 +96,7 @@ export async function DELETE(
         id: params.courseId,
         userId: user.id,
       },
-      include:{
+      include: {
         Chapters: {
           include: {
             muxData: true,
@@ -123,7 +122,6 @@ export async function DELETE(
     });
 
     return NextResponse.json(deletedCourse, { status: 201 });
-    
   } catch (error) {
     console.log("[COURSES_DELETE]", error);
     return new NextResponse("Internal Server Error", { status: 500 });

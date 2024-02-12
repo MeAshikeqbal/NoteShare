@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(
   req: Request,
-  { params }: { params: { courseId: string } }
+  { params }: { params: { courseId: string } },
 ) {
   try {
     const user = await currentUser();
@@ -29,8 +29,8 @@ export async function POST(
     const courseOwner = await db.course.findUnique({
       where: {
         id: params.courseId,
-        userId: user.id,    
-    },
+        userId: user.id,
+      },
     });
 
     if (!courseOwner) {
@@ -38,13 +38,13 @@ export async function POST(
     }
 
     const lastChapter = await db.chapter.findFirst({
-        where:{
-            courseId:params.courseId,
-        },
-        orderBy:{
-            position:"desc",
-        },
-    })
+      where: {
+        courseId: params.courseId,
+      },
+      orderBy: {
+        position: "desc",
+      },
+    });
 
     const newPosition = lastChapter?.position ? lastChapter.position + 1 : 1;
 
@@ -52,12 +52,11 @@ export async function POST(
       data: {
         title,
         courseId: params.courseId,
-        position:newPosition,
+        position: newPosition,
       },
     });
 
     return NextResponse.json(chapter, { status: 201 });
-
   } catch (error) {
     console.log("COURSE CHAPTERS POST ERROR: ", error);
     return new NextResponse("Internal Server Error", { status: 500 });
