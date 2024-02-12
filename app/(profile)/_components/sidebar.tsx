@@ -1,38 +1,37 @@
-"use client"
+"use client";
 
 import { usePathname } from "next/navigation";
 import { DashboardIcon } from "@radix-ui/react-icons";
 
-
 export const DashboardSidebar = () => {
-    const pathname = usePathname();
+  const pathname = usePathname();
 
-    const routes = [
-        {
-            href: "/dashboard",
-            label: "Dashboard",
-            active: pathname.startsWith(`/dashboard`),            
-            icon: <DashboardIcon className="w-5 h-5" />,
-        },
-        {
-            href: "/dashboard/notes",
-            label: "Notes",
-            active: pathname === `/dashboard/notes`,
-            icon: <DashboardIcon className="w-5 h-5" />,
-        },
-        {
-            href: "/dashboard/courses",
-            label: "Courses",
-            active: pathname === `/dashboard/courses`,
-            icon: <DashboardIcon className="w-5 h-5" />,
-        },
-        {
-            href: "/dashboard/blogs",
-            label: "Blogs",
-            active: pathname === `/dashboard/blogs`,
-            icon: <DashboardIcon className="w-5 h-5" />,
-        }
-    ]
+  const routes = [
+    {
+      href: "/dashboard",
+      label: "Dashboard",
+      active: pathname.startsWith("/dashboard"),
+      icon: <DashboardIcon className="w-5 h-5" />,
+    },
+    {
+      href: "/dashboard/notes",
+      label: "Notes",
+      active: pathname === "/dashboard/notes",
+      icon: <DashboardIcon className="w-5 h-5" />,
+    },
+    {
+      href: "/dashboard/courses",
+      label: "Courses",
+      active: pathname === "/dashboard/courses",
+      icon: <DashboardIcon className="w-5 h-5" />,
+    },
+    {
+      href: "/dashboard/blogs",
+      label: "Blogs",
+      active: pathname === "/dashboard/blogs",
+      icon: <DashboardIcon className="w-5 h-5" />,
+    },
+  ];
 
     return (
         <div>
