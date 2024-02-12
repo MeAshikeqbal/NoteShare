@@ -42,7 +42,7 @@ export const getChapter = async ({
     let muxData = null;
     let attachments: Attachment[] = [];
     let nextChapter: Chapter | null = null;
-    //    let chapterAttachments: ChapterAttachment[] = [];
+     let chapterAttachments: ChapterAttachment[] = [];
 
     if (subscribedCourse) {
       attachments = await db.attachment.findMany({
@@ -72,12 +72,6 @@ export const getChapter = async ({
         },
       });
     }
-
-    //  const chapterAttachment = await db.chapterAttachment.findMany({
-    //      where:{
-    //          chapterId: chapterId,
-    //      }
-    //  })
 
     const userProgress = await db.userProgress.findUnique({
       where: {

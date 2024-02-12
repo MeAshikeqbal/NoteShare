@@ -1,6 +1,5 @@
 "use client"
 
-import { SideBar } from "@/components/side-bar"
 import { usePathname } from "next/navigation";
 import { DashboardIcon } from "@radix-ui/react-icons";
 
@@ -37,10 +36,10 @@ export const DashboardSidebar = () => {
 
     return (
         <div>
-            <SideBar
-                routes={routes}
-                className="hidden md:flex flex-col items-center justify-between w-20 h-screen bg-blue-950"
-            />
+          <SideBar
+              routes={routes}
+              className="hidden md:flex flex-col items-center justify-between w-20 h-screen bg-blue-950"
+          />
 
         </div>
     )
