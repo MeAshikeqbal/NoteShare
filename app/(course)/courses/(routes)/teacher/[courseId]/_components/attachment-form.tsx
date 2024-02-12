@@ -15,7 +15,7 @@ import { toast } from "sonner";
 interface AttachmentFormProps {
   initialData: Course & { attachments: Attachment[] };
   courseId: string;
-};
+}
 
 const formSchema = z.object({
   url: z.string().min(1),
@@ -23,7 +23,7 @@ const formSchema = z.object({
 
 export const AttachmentForm = ({
   initialData,
-  courseId
+  courseId,
 }: AttachmentFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -40,7 +40,7 @@ export const AttachmentForm = ({
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
-        }
+        },
       });
       await axios.post(`/api/courses/${courseId}/attachments`, values);
       toast.success("Course updated", {
@@ -49,7 +49,7 @@ export const AttachmentForm = ({
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
-        }
+        },
       });
       toggleEdit();
       router.refresh();
@@ -60,7 +60,7 @@ export const AttachmentForm = ({
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
-        }
+        },
       });
     }
   };
@@ -73,8 +73,8 @@ export const AttachmentForm = ({
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
-        }
-      })
+        },
+      });
       setDeletingId(id);
       await axios.delete(`/api/courses/${courseId}/attachments/${id}`);
       toast.success("Attachment deleted", {
@@ -83,7 +83,7 @@ export const AttachmentForm = ({
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
-        }
+        },
       });
       router.refresh();
     } catch {
@@ -93,21 +93,19 @@ export const AttachmentForm = ({
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
-        }
+        },
       });
     } finally {
       setDeletingId(null);
     }
-  }
+  };
 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Course attachments
         <Button onClick={toggleEdit} variant="ghost">
-          {isEditing && (
-            <>Cancel</>
-          )}
+          {isEditing && <>Cancel</>}
           {!isEditing && (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
@@ -131,9 +129,7 @@ export const AttachmentForm = ({
                   className="flex items-center p-3 w-full bg-sky-100 border-sky-200 border text-sky-700 rounded-md"
                 >
                   <File className="h-4 w-4 mr-2 flex-shrink-0" />
-                  <p className="text-xs line-clamp-1">
-                    {attachment.name}
-                  </p>
+                  <p className="text-xs line-clamp-1">{attachment.name}</p>
                   {deletingId === attachment.id && (
                     <div>
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -169,5 +165,5 @@ export const AttachmentForm = ({
         Add anything your students might need to complete the course.
       </div>
     </div>
-  )
-}
+  );
+};

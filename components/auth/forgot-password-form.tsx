@@ -15,12 +15,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { CardWrapper } from "@/components/auth/card-wrapper"
+import { CardWrapper } from "@/components/auth/card-wrapper";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { ForgotPassword } from "@/actions/forgot-password";
-
 
 export const ForgotPasswordForm = () => {
   const [error, setError] = useState<string | undefined>("");
@@ -39,11 +38,10 @@ export const ForgotPasswordForm = () => {
     setSuccess("");
 
     startTransition(() => {
-      ForgotPassword(data)
-        .then((data) => {
-          setError(data?.error);
-          setSuccess(data?.success);
-        });
+      ForgotPassword(data).then((data) => {
+        setError(data?.error);
+        setSuccess(data?.success);
+      });
     });
   };
 
@@ -54,10 +52,7 @@ export const ForgotPasswordForm = () => {
       backButtonHref="/login"
     >
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
             <FormField
               control={form.control}
@@ -80,11 +75,7 @@ export const ForgotPasswordForm = () => {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button
-            disabled={isPending}
-            type="submit"
-            className="w-full"
-          >
+          <Button disabled={isPending} type="submit" className="w-full">
             Send Reset Email
           </Button>
         </form>

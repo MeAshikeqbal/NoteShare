@@ -13,10 +13,10 @@ import { FileUpload } from "@/components/file-upload";
 import { toast } from "sonner";
 
 interface AttachmentFormProps {
-  initialData: Chapter & { attachments: ChapterAttachment[]};
+  initialData: Chapter & { attachments: ChapterAttachment[] };
   courseId: string;
   chapterId: string;
-};
+}
 
 const formSchema = z.object({
   url: z.string().min(1),
@@ -42,16 +42,19 @@ export const AttachmentForm = ({
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
-        }
+        },
       });
-      await axios.post(`/api/courses/${courseId}/chapters/${chapterId}/attachments`, values);
+      await axios.post(
+        `/api/courses/${courseId}/chapters/${chapterId}/attachments`,
+        values,
+      );
       toast.success("Course updated", {
         duration: 5000,
         position: "bottom-right",
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
-        }
+        },
       });
       toggleEdit();
       router.refresh();
@@ -62,7 +65,7 @@ export const AttachmentForm = ({
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
-        }
+        },
       });
     }
   };
@@ -75,17 +78,19 @@ export const AttachmentForm = ({
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
-        }
-      })
+        },
+      });
       setDeletingId(id);
-      await axios.delete(`/api/courses/${courseId}/chapters/${chapterId}/attachments/${id}`);
+      await axios.delete(
+        `/api/courses/${courseId}/chapters/${chapterId}/attachments/${id}`,
+      );
       toast.success("Attachment deleted", {
         duration: 5000,
         position: "bottom-right",
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
-        }
+        },
       });
       router.refresh();
     } catch {
@@ -95,21 +100,19 @@ export const AttachmentForm = ({
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
-        }
+        },
       });
     } finally {
       setDeletingId(null);
     }
-  }
+  };
 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Chapter attachments
         <Button onClick={toggleEdit} variant="ghost">
-          {isEditing && (
-            <>Cancel</>
-          )}
+          {isEditing && <>Cancel</>}
           {!isEditing && (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
@@ -133,9 +136,7 @@ export const AttachmentForm = ({
                   className="flex items-center p-3 w-full bg-sky-100 border-sky-200 border text-sky-700 rounded-md"
                 >
                   <File className="h-4 w-4 mr-2 flex-shrink-0" />
-                  <p className="text-xs line-clamp-1">
-                    {attachment.name}
-                  </p>
+                  <p className="text-xs line-clamp-1">{attachment.name}</p>
                   {deletingId === attachment.id && (
                     <div>
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -167,9 +168,9 @@ export const AttachmentForm = ({
           />
         </div>
       )}
-          <div className="text-xs text-muted-foreground mt-4">
-            Add anything your students might need to complete the chapter.
-          </div>
+      <div className="text-xs text-muted-foreground mt-4">
+        Add anything your students might need to complete the chapter.
+      </div>
     </div>
-  )
-}
+  );
+};

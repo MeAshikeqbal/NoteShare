@@ -3,7 +3,7 @@ import { getProgress } from "./get-progress";
 import { db } from "@/lib/db";
 
 type CourseWithProgressWithCategory = Course & {
-  progress: number|null;
+  progress: number | null;
   catagory: Catagory | null;
   chapters: { id: string }[];
 };
@@ -49,26 +49,26 @@ export const getCourses = async ({
       },
     });
     const coursesWithProgress: CourseWithProgressWithCategory[] =
-    await Promise.all(
-      courses.map(async course => {
-        if (course.subscription.length === 0) {
+      await Promise.all(
+        courses.map(async (course) => {
+          if (course.subscription.length === 0) {
+            return {
+              ...course,
+              chapters: course.Chapters,
+              category: course.catagory!,
+              progress: null,
+            };
+          }
+
+          const progressPercentage = await getProgress(userId, course.id);
           return {
             ...course,
             chapters: course.Chapters,
             category: course.catagory!,
-            progress: null,
+            progress: progressPercentage,
           };
-        }
-  
-        const progressPercentage = await getProgress(userId, course.id,);
-        return {
-          ...course,
-            chapters: course.Chapters,
-            category: course.catagory!,
-          progress: progressPercentage,
-        };
-      })
-    );    
+        }),
+      );
     return coursesWithProgress;
   } catch (error) {
     console.log("[GET_COURSES_ERROR]", error);

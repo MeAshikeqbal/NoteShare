@@ -45,7 +45,7 @@ export const newVerification = async (token: string) => {
     },
   });
 
-    return {
-        success: "Email verified",
-    };
+  return {
+    success: "Email verified",
+  };
 };

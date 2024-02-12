@@ -28,7 +28,7 @@ interface ChapterAccessFormProps {
   initialData: Chapter;
   courseId: string;
   chapterId: string;
-};
+}
 
 const formSchema = z.object({
   isIntro: z.boolean().default(false),
@@ -37,7 +37,7 @@ const formSchema = z.object({
 export const ChapterAccessForm = ({
   initialData,
   courseId,
-  chapterId
+  chapterId,
 }: ChapterAccessFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -48,7 +48,7 @@ export const ChapterAccessForm = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      isIntro: !!initialData.isIntro
+      isIntro: !!initialData.isIntro,
     },
   });
 
@@ -56,37 +56,37 @@ export const ChapterAccessForm = ({
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-        toast.loading("Updating chapter description", {
-            duration: 5000,
-            position: "bottom-right",
-            action: {
-                label: "Close",
-                onClick: () => toast.dismiss(),
-            }
-        })
-
-        await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, data)
-        toast.success("Chapter updated",{
+      toast.loading("Updating chapter description", {
         duration: 5000,
         position: "bottom-right",
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
-        }
+        },
+      });
+
+      await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, data);
+      toast.success("Chapter updated", {
+        duration: 5000,
+        position: "bottom-right",
+        action: {
+          label: "Close",
+          onClick: () => toast.dismiss(),
+        },
       });
       toggleEdit();
       router.refresh();
     } catch {
-      toast.error("Something went wrong",{
+      toast.error("Something went wrong", {
         duration: 5000,
         position: "bottom-right",
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
-        }
+        },
       });
     }
-  }
+  };
 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
@@ -104,10 +104,12 @@ export const ChapterAccessForm = ({
         </Button>
       </div>
       {!isEditing && (
-        <p className={cn(
-          "text-sm mt-2",
-          !initialData.isIntro && "text-slate-500 italic"
-        )}>
+        <p
+          className={cn(
+            "text-sm mt-2",
+            !initialData.isIntro && "text-slate-500 italic",
+          )}
+        >
           {initialData.isIntro ? (
             <>This chapter is a Introduction Chapter.</>
           ) : (
@@ -134,17 +136,15 @@ export const ChapterAccessForm = ({
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormDescription>
-                      Check this box if you want to make this chapter as a Introduction Chapter.
+                      Check this box if you want to make this chapter as a
+                      Introduction Chapter.
                     </FormDescription>
                   </div>
                 </FormItem>
               )}
             />
             <div className="flex items-center gap-x-2">
-              <Button
-                disabled={!isValid || isSubmitting}
-                type="submit"
-              >
+              <Button disabled={!isValid || isSubmitting} type="submit">
                 Save
               </Button>
             </div>
@@ -152,5 +152,5 @@ export const ChapterAccessForm = ({
         </Form>
       )}
     </div>
-  )
-}
+  );
+};

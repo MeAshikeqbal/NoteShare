@@ -1,20 +1,15 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 interface CourseEnrollButtonProps {
-    courseId: string
+  courseId: string;
 }
 
-export const CourseEnrollButton = ({
-    courseId
-}: CourseEnrollButtonProps) => {
-    return (
-        <Button
-        size="sm"
-        className="w-full md:w-auto"
-        >
-            Enroll Now
-        </Button>
-    )
-}
+export const CourseEnrollButton = ({ courseId }: CourseEnrollButtonProps) => {
+  return (
+    <Button size="sm" className="w-full md:w-auto">
+      Enroll Now
+    </Button>
+  );
+};

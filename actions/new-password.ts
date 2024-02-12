@@ -9,7 +9,7 @@ import { db } from "@/lib/db";
 
 export const NewPassword = async (
   data: z.infer<typeof NewPasswordSchema>,
-  token?: string | null
+  token?: string | null,
 ) => {
   if (!token) {
     return {

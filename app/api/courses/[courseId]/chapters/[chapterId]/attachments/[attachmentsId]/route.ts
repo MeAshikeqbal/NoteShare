@@ -4,12 +4,14 @@ import { db } from "@/lib/db";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { courseId: string; attachmentsId: string; chapterId: string } }
+  {
+    params,
+  }: { params: { courseId: string; attachmentsId: string; chapterId: string } },
 ) {
   try {
     const user = await currentUser();
     const userRole = user?.role;
-    const { courseId, attachmentsId,chapterId } = params;
+    const { courseId, attachmentsId, chapterId } = params;
 
     if (userRole !== "TEACHER") {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -45,9 +47,6 @@ export async function DELETE(
     if (!chapter) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-
-  
-
 
     const attachment = await db.chapterAttachment.delete({
       where: {

@@ -42,7 +42,7 @@ export const getChapter = async ({
     let muxData = null;
     let attachments: Attachment[] = [];
     let nextChapter: Chapter | null = null;
-     let chapterAttachments: ChapterAttachment[] = [];
+    let chapterAttachments: ChapterAttachment[] = [];
 
     if (subscribedCourse) {
       attachments = await db.attachment.findMany({
@@ -51,7 +51,7 @@ export const getChapter = async ({
         },
       });
     }
-    
+
     if (subscribedCourse || chapter.isIntro) {
       muxData = await db.muxData.findUnique({
         where: {

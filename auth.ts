@@ -42,7 +42,7 @@ export const {
       }
       if (existingUser.isTwoFactorEnabled) {
         const twofactorConfirmation = await getTwoFactorConfirmationByUserId(
-          existingUser.id
+          existingUser.id,
         );
 
         if (!twofactorConfirmation) {
@@ -81,11 +81,10 @@ export const {
       if (!token.sub) return token;
 
       const existingUser = await getUserById(token.sub);
-      
-      if (!existingUser) return token;
-      
-      const existingAccount = await getAccountByUserId(existingUser.id);
 
+      if (!existingUser) return token;
+
+      const existingAccount = await getAccountByUserId(existingUser.id);
 
       token.isOAuth = !!existingAccount;
       token.name = existingUser.name;

@@ -1,7 +1,7 @@
 "use client";
 
 import { FaUser } from "react-icons/fa";
-import { ExitIcon, EnterIcon } from "@radix-ui/react-icons"
+import { ExitIcon, EnterIcon } from "@radix-ui/react-icons";
 
 import {
   DropdownMenu,
@@ -9,11 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
-} from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { LoginButton } from "./login-button";
@@ -42,7 +38,7 @@ export const UserButton = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-    )
+    );
   }
 
   return (
@@ -57,15 +53,9 @@ export const UserButton = () => {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-40" align="end">
-          <DropdownMenuItem
-            className="flex flex-col items-start justify-center space-y-1"
-          >
-            <p className="text-sm font-medium">
-              {user?.name}
-            </p>
-            <p className="text-xs text-gray-500">
-              @{user?.username}
-            </p>
+          <DropdownMenuItem className="flex flex-col items-start justify-center space-y-1">
+            <p className="text-sm font-medium">{user?.name}</p>
+            <p className="text-xs text-gray-500">@{user?.username}</p>
           </DropdownMenuItem>
           <LogoutButton>
             <DropdownMenuItem>

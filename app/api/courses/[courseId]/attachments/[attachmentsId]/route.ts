@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { courseId: string; attachmentsId: string } }
+  { params }: { params: { courseId: string; attachmentsId: string } },
 ) {
   try {
     const user = await currentUser();
