@@ -3,11 +3,7 @@
  * require no authentication
  * @type {string[]}
  */
-export const publicRoutes = [
-    "/",
-    "/new-verification",
-    "/api/uploadthing",
-];
+export const publicRoutes = ["/", "/new-verification", "/api/uploadthing"];
 
 /**
  * An array of routes for authention
@@ -15,21 +11,18 @@ export const publicRoutes = [
  * @type {string[]}
  */
 export const authRoutes = [
-    "/login",
-    "/register",
-    "/error",
-    "/forgot-password",
-    "/new-password",
+  "/login",
+  "/register",
+  "/error",
+  "/forgot-password",
+  "/new-password",
 ];
 
 /**
  * An array of routes that require a user to be authenticated
  * @type {string[]}
  */
-export const privateRoutes = [
-    "/dashboard",
-    "/settings",
-];
+export const privateRoutes = ["/dashboard", "/settings"];
 
 /**
  * Prefix for API auth routes
@@ -37,9 +30,7 @@ export const privateRoutes = [
  */
 export const apiAuthPrefix = "/api/auth";
 
-
 /**
  * Default redirect path after login
  */
 export const DEFAULT_LOGIN_REDIRECT = "/";
-
